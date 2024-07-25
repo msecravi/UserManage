@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Image, Platform, ScrollView, Text, View, TextInput, Button, Pressable } from 'react-native';
+import { ENV } from '../globals';
 
 export default function RegisterScreen() {
   const [data, setData] = useState({ fullname: '', email: '', password: '' })
@@ -68,7 +69,7 @@ export default function RegisterScreen() {
   }
   const submit = async () => {
     if (validation()) {
-      const rawResponse = await fetch('https://reqres.in/api/users', {
+      const rawResponse = await fetch(ENV.URL+'users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -92,19 +93,19 @@ export default function RegisterScreen() {
           <View style={styles.inputGroup}>
             <Text>Full Name</Text>
             <TextInput onChange={(e) => handleChange('fullname', e.target.value)} value={data.fullname ?? ''} style={styles.textInput} />
-            {errors.fullname && <View style={{ color: 'red' }}>{errors.fullname}</View>}
+            <Text style={{ color: 'red' }}>{errors.fullname ?? ''}</Text>
           </View>
           <View style={styles.inputGroup}>
             <Text>Email</Text>
             <TextInput onChange={(e) => handleChange('email', e.target.value)} value={data.email ?? ''} style={styles.textInput} />
-            {errors.email && <View style={{ color: 'red' }}>{errors.email}</View>}
+            <Text style={{ color: 'red' }}>{errors.email ?? ''}</Text>
           </View>
           <View style={styles.inputGroup}>
             <Text>Password</Text>
             <TextInput onChange={(e) => handleChange('password', e.target.value)}  value={data.password ?? ''} secureTextEntry={true} style={styles.textInput} />
-            {errors.password && <View style={{ color: 'red' }}>{errors.password}</View>}
+            <Text style={{ color: 'red' }}>{errors.password ?? ''}</Text>
           </View>
-          <View style={{ color:'green'}}>{message ?? '' }</View>
+          <Text style={{ color:'green'}}>{message ?? '' }</Text>
           <View style={{ paddingTop: 20 }}>
             <Pressable onPress={() => submit()} style={styles.button}><Text style={styles.text}>Submit</Text></Pressable>
           </View>
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   textInput: {
+    paddingLeft:10,
     height: 40,
     borderWidth: 1,
   },
