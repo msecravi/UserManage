@@ -82,17 +82,17 @@ export default function edit() {
   return (
     <View>
       <View style={{ height: 200, backgroundColor: 'black' }}>
-        <Image style={{ margin: 'auto', width: 100, height: 100, borderRadius: 50 }} source={user.avatar} />
+        <Image style={{ margin: 'auto', width: 100, height: 100, borderRadius: 50 }} source={{uri:user.avatar}} />
       </View>
       <View style={styles.titleContainer}>
         <View style={styles.inputGroup}>
           <Text>Name</Text>
-          <TextInput onChange={(e) => handleChange('fullname', e.target.value)} value={data.fullname ?? ''} style={styles.textInput} />
+          <TextInput onChangeText={(value) => handleChange('fullname', value)} value={data.fullname ?? ''} style={styles.textInput} />
           <Text style={{ color: 'red' }}>{errors.fullname ?? '' }</Text>
         </View>
         <View style={styles.inputGroup}>
           <Text>Email</Text>
-          <TextInput onChange={(e) => handleChange('email', e.target.value)} value={data.email ?? ''} style={styles.textInput} />
+          <TextInput onChangeText={(value) => handleChange('email', value)} value={data.email ?? ''} style={styles.textInput} />
           <Text style={{ color: 'red' }}>{errors.email ?? ''}</Text>
         </View>
         <Text style={{ color:'green'}}>{message ?? '' }</Text>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   button: {
-    width: 100,
+    width: 200,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,

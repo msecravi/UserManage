@@ -7,20 +7,19 @@ export default function RegisterScreen() {
   const [errors, setErrors] = useState({ fullname: '', email: '', password: '' })
   const [message, setMessage] = useState('')
   const handleChange = (key, value) => {
-    setData((data) => ({
-      ...data,
+    setData((prevState) => ({
+      ...prevState,
       [key]: value
     }))
   }
-  function isValidFullname(){
+  function isValidFullname() {
     if (data.fullname == '') {
       setErrors(errors => ({
         ...errors,
         fullname: 'Please enter fullname',
       }))
-      console.log(errors)
       return false;
-    }else{
+    } else {
       setErrors(errors => ({
         ...errors,
         fullname: '',
@@ -28,16 +27,15 @@ export default function RegisterScreen() {
       return true;
     }
   }
-  function isValidEmail(){
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(data.email)) {
+  function isValidEmail() {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(data.email) === false) {
       setErrors(errors => ({
         ...errors,
         email: 'Invalid Email',
       }))
-      console.log(errors)
       return false;
-    }else{
+    } else {
       setErrors(errors => ({
         ...errors,
         email: '',
@@ -45,15 +43,15 @@ export default function RegisterScreen() {
       return true;
     }
   }
-  
-  function isValidPassword(){
-    if (data.password.length <8) {
+
+  function isValidPassword() {
+    if (data.password.length < 8) {
       setErrors(errors => ({
         ...errors,
         password: 'Please enter password more than 8 charcaters',
       }))
       return false;
-    }else{
+    } else {
       setErrors(errors => ({
         ...errors,
         password: '',
@@ -62,14 +60,14 @@ export default function RegisterScreen() {
     }
   }
   const validation = () => {
-    if(isValidFullname() && isValidEmail() && isValidPassword()){
+    if (isValidFullname() && isValidEmail() && isValidPassword()) {
       return true;
     }
     return false;
   }
   const submit = async () => {
     if (validation()) {
-      const rawResponse = await fetch(ENV.URL+'users', {
+      const rawResponse = await fetch(ENV.URL + 'users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -92,20 +90,20 @@ export default function RegisterScreen() {
         <View style={{ paddingTop: 30 }}>
           <View style={styles.inputGroup}>
             <Text>Full Name</Text>
-            <TextInput onChange={(e) => handleChange('fullname', e.target.value)} value={data.fullname ?? ''} style={styles.textInput} />
+            <TextInput onChangeText={(value) => handleChange('fullname', value)} value={data.fullname ?? ''} style={styles.textInput} />
             <Text style={{ color: 'red' }}>{errors.fullname ?? ''}</Text>
           </View>
           <View style={styles.inputGroup}>
             <Text>Email</Text>
-            <TextInput onChange={(e) => handleChange('email', e.target.value)} value={data.email ?? ''} style={styles.textInput} />
+            <TextInput onChangeText={(value) => handleChange('email', value)} value={data.email ?? ''} style={styles.textInput} />
             <Text style={{ color: 'red' }}>{errors.email ?? ''}</Text>
           </View>
           <View style={styles.inputGroup}>
             <Text>Password</Text>
-            <TextInput onChange={(e) => handleChange('password', e.target.value)}  value={data.password ?? ''} secureTextEntry={true} style={styles.textInput} />
+            <TextInput onChangeText={(value) => handleChange('password', value)} value={data.password ?? ''} secureTextEntry={true} style={styles.textInput} />
             <Text style={{ color: 'red' }}>{errors.password ?? ''}</Text>
           </View>
-          <Text style={{ color:'green'}}>{message ?? '' }</Text>
+          <Text style={{ color: 'green' }}>{message ?? ''}</Text>
           <View style={{ paddingTop: 20 }}>
             <Pressable onPress={() => submit()} style={styles.button}><Text style={styles.text}>Submit</Text></Pressable>
           </View>
@@ -133,7 +131,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   textInput: {
-    paddingLeft:10,
+    paddingLeft: 10,
     height: 40,
     borderWidth: 1,
   },

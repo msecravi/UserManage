@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View, Text, SafeAreaView, Dimensions } from 'react-native';
 import { useEffect, useState } from 'react';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { FlatList, ScrollView, GestureHandlerRootView  } from 'react-native-gesture-handler';
 import { Link } from 'expo-router';
 import { ENV } from '../globals';
 
@@ -25,12 +25,12 @@ export default function HomeScreen() {
       });
     }
   }, [page])
-  const renderUser = (items) => {
+  const renderUser = (items:any) => {
     return <View key={items.id} style={styles.container}>
       <Link href={{ pathname: '/profile', params: { id: items.id } }}>
         <View style={styles.row}>
           <View style={styles.image}>
-            <Image style={styles.image} source={items.avatar} />
+            <Image style={styles.image} source={{uri:items.avatar}} />
           </View>
           <View style={{ paddingLeft: 10, paddingTop: 5 }}>
             <Text style={{ fontWeight: 'bold' }}>{items.first_name} {items.last_name}</Text>
@@ -41,13 +41,12 @@ export default function HomeScreen() {
     </View>
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{ marginHorizontal: 20 }}>
+    <GestureHandlerRootView  style={{ flex: 1 }}>
+      <View style={{ marginHorizontal: 20,marginTop:40 }}>
         <FlatList
-          contentContainerStyle={{ flexGrow: 1, height: windowHeight-70 }}
           data={users}
           renderItem={({ item }) => renderUser(item)}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item :any) => item.id}
           onEndReachedThreshold={0.2}
           onEndReached={() => {
             if(!loading){
@@ -55,8 +54,8 @@ export default function HomeScreen() {
             }
           }}
         />
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </GestureHandlerRootView >
   );
 }
 

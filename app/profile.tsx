@@ -16,7 +16,7 @@ export default function profile() {
   return (
     <View>
       <View style={{ height: 200, backgroundColor: 'black' }}>
-        <Image style={{ margin: 'auto', width: 100, height: 100, borderRadius: 50 }} source={user.avatar} />
+        <Image style={{ margin: 'auto', width: 100, height: 100, borderRadius: 50 }} source={{uri:user.avatar}} />
       </View>
       <View style={styles.titleContainer}>
         <View style={{ paddingTop: 20, justifyContent:'flex-end',alignItems:'flex-end' }}>
